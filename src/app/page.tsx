@@ -1,56 +1,24 @@
 import Image from "next/image";
-import { client } from "../../sanity/lib/client";
-import imageUrlBuilder from "@sanity/image-url";
 import { UserButton } from "@clerk/nextjs";
 import { SignUp } from "@clerk/nextjs";
 import Header from "@/components/layout/Header";
 import { currentUser } from "@clerk/nextjs";
 import Hero from "@/components/layout/Hero";
+import Promotions from "@/components/layout/Promotions";
+import Featured from "@/components/layout/Featured";
+import NewsLetter from "@/components/layout/NewsLetter";
+import Footer from "@/components/layout/Footer";
 
-interface Product {
-  title: string;
-  description: string;
-  image: string;
-}
-
-const getProducts = async () => {
-  const products = await client.fetch(`*[_type == "products"]{
-    title,
-    description,
-    image
-  }`);
-
-  return products;
-};
 export default async function Home() {
-  const user = await currentUser();
-  console.log(user);
-  const builder = imageUrlBuilder(client);
-
-  const products = await getProducts();
-
-  function urlFor(source: string) {
-    return builder.image(source);
-  }
-
   return (
     <main className="min-h-[100vh]">
       <div className="h-[100vh] flex flex-col">
-        <Header />
         <Hero />
       </div>
-
-      {/* <div>
-        <div>
-        </div>
-        {products.map((product: Product) => (
-          <div>
-            <h1>{product.title}</h1>
-            <p>{product.description}</p>
-            <img src={urlFor(product.image).width(200).url()} alt="pic" />
-          </div>
-        ))}
-      </div> */}
+      <Promotions />
+      <Featured />
+      <NewsLetter />
+      <Footer />
     </main>
   );
 }

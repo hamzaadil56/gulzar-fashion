@@ -10,13 +10,19 @@ export const products = {
     },
     {
       name: "description",
-      type: "string",
+      type: "text",
       title: "Product Description",
     },
     {
-      name: "image",
-      type: "image",
-      title: "Product Image",
+      name: "images",
+      type: "array",
+      title: "Images",
+      of: [{ type: "image", title: "image" }],
+    },
+    {
+      name: "price",
+      type: "number",
+      title: "Price",
     },
   ],
 };

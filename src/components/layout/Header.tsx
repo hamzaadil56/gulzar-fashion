@@ -15,11 +15,17 @@ import { Search } from "lucide-react";
 import { ShoppingBag } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { useState, useRef, useEffect } from "react";
+import Cart from "./Cart";
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const linksRef = useRef<HTMLUListElement>(null);
   const linksRefContainer = useRef<HTMLDivElement>(null);
+  const [isCartOpen, setCartOpen] = useState(false);
 
+  function cartClose() {
+    setCartOpen(false);
+    console.log(isCartOpen);
+  }
   // useEffect(() => {
   //   const linksHeight = linksRef.current?.getBoundingClientRect().height;
   //   if (isOpen) {
@@ -92,15 +98,20 @@ function Header() {
         <li className="text-sm hidden md:block">
           <Link href="/account">Account</Link>
         </li>
-        <li className="text-sm inline-flez">
-          <Link className="flex  items-center" href="/cart">
+        <li className="text-sm relative inline-flex">
+          {isCartOpen ? <Cart cartClose={cartClose} /> : null}
+
+          <div
+            onClick={() => setCartOpen(true)}
+            className="flex cursor-pointer items-center"
+          >
             <p className="hidden md:block">Bag</p>
             <div className="relative ">
               <ShoppingBag className="mx-2  " color="white" fill="black" />
 
-              <Badge className="absolute bottom-2 right-0">2</Badge>
+              <Badge className="absolute bottom-2 right-0">0</Badge>
             </div>
-          </Link>
+          </div>
         </li>
       </ul>
     </header>

@@ -1,9 +1,12 @@
 // app/layout.tsx
 import "../styles/globals.css";
-import { Inter } from "next/font/google";
+import { Ovo } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import Header from "@/components/layout/Header";
+import { store } from "@/redux/store";
+import CartProvider from "@/components/layout/CartProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Ovo({ subsets: ["latin"], weight: "400" });
 
 export const metadata = {
   title: "Create Next App",
@@ -16,10 +19,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={inter.className}>
+        <ClerkProvider>
+          <CartProvider>
+            <Header />
+            {children}
+          </CartProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
