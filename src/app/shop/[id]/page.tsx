@@ -7,6 +7,7 @@ import { Product } from "../../../../utils/types";
 import imageUrlBuilder from "@sanity/image-url";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import SidePicture from "@/components/shared/SidePicture";
+import AddToCart from "@/components/shared/AddToCart";
 
 const Product = async ({ params }: { params: { id: string } }) => {
   const products = await client.fetch(
@@ -19,13 +20,17 @@ const Product = async ({ params }: { params: { id: string } }) => {
   function urlFor(source: SanityImageSource) {
     return builder.image(source);
   }
+
   return (
     <div className="max-w-7xl px-5 md:px-10 py-2 mx-auto ">
       <div className="flex gap-4">
         <div className="pictures-container flex  flex-1">
           <div>
-            {product.images.map((image) => (
-              <SidePicture imageSrc={urlFor(image.asset?._ref!).url()} />
+            {product.images.map((image, index) => (
+              <SidePicture
+                key={index}
+                imageSrc={urlFor(image.asset?._ref!).url()}
+              />
             ))}
           </div>
           <div className="border-box mx-2">
@@ -66,11 +71,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
                 L
               </button>
             </div>
-            <div>
-              <button className="text-center leading-none p-4 w-full bg-black text-white my-2">
-                Add To Cart{" "}
-              </button>
-            </div>
+            <AddToCart product={product} />
           </div>
         </div>
       </div>

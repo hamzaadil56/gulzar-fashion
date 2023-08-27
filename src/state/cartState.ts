@@ -1,28 +1,77 @@
 import { create } from "zustand";
-
-export interface Item {
-  price: number;
-  title: string;
-  quantity: number;
-}
+import { CartItem } from "../../utils/types";
 
 interface CartState {
-  totalItems: Item[];
+  cartItems: CartItem[];
+
   totalPrice: number;
   totalQuantity: number;
-  addItem: (item: Item) => void;
-  addPrice: (item: Item) => void;
-  addQuantity: (item: Item) => void;
+
+  addToCart: (item: CartItem) => void;
+  addPrice: (item: CartItem) => void;
+  addProductQuantity: (item: CartItem) => void;
+
+  subProductQuantity: (item: CartItem) => void;
 }
 
 export const useCartStore = create<CartState>((set) => ({
-  totalItems: [],
+  cartItems: [],
   totalPrice: 0,
   totalQuantity: 0,
-  addItem: (item: Item) =>
-    set((state) => ({ totalItems: [...state.totalItems, item] })),
-  addPrice: (item: Item) =>
+
+  addToCart: (item: CartItem) =>
+    set((state) => {
+      const { cartItems } = state;
+      const checkItem = cartItems.find((cartItem) => cartItem._id === item._id);
+      if (checkItem) {
+        const updatedCartItems = cartItems.map((cartItem) => {
+          if (cartItem._id === checkItem._id) {
+            cartItem.quantity += item.quantity;
+          }
+          return cartItem;
+        });
+        return {
+          cartItems: updatedCartItems,
+          totalQuantity: state.totalQuantity + item.quantity,
+          totalPrice: state.totalPrice + item.quantity * item.price,
+        };
+      }
+
+      return {
+        cartItems: [...state.cartItems, item],
+        totalQuantity: state.totalQuantity + item.quantity,
+        totalPrice: state.totalPrice + item.quantity * item.price,
+      };
+    }),
+  addPrice: (item: CartItem) =>
     set((state) => ({ totalPrice: state.totalPrice + item.price })),
-  addQuantity: (item: Item) =>
-    set((state) => ({ totalQuantity: state.totalQuantity + item.quantity })),
+  addProductQuantity: (item: CartItem) =>
+    set((state) => {
+      const updatedCartItems = state.cartItems.map((cartItem) => {
+        if (cartItem._id === item._id) {
+          cartItem.quantity += 1;
+        }
+        return cartItem;
+      });
+      return {
+        cartItems: updatedCartItems,
+        totalQuantity: state.totalQuantity + 1,
+        totalPrice: state.totalPrice + item.price,
+      };
+    }),
+
+  subProductQuantity: (item: CartItem) =>
+    set((state) => {
+      const updatedCartItems = state.cartItems.map((cartItem) => {
+        if (cartItem._id === item._id) {
+          cartItem.quantity -= 1;
+        }
+        return cartItem;
+      });
+      return {
+        cartItems: updatedCartItems,
+        totalQuantity: state.totalQuantity - 1,
+        totalPrice: state.totalPrice - item.price,
+      };
+    }),
 }));

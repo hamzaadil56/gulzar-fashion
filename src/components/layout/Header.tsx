@@ -16,11 +16,15 @@ import { ShoppingBag } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { useState, useRef, useEffect } from "react";
 import Cart from "./Cart";
+import { useCartStore } from "@/state/cartState";
+
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const linksRef = useRef<HTMLUListElement>(null);
   const linksRefContainer = useRef<HTMLDivElement>(null);
   const [isCartOpen, setCartOpen] = useState(false);
+
+  const { totalQuantity } = useCartStore();
 
   function cartClose() {
     setCartOpen(false);
@@ -109,7 +113,9 @@ function Header() {
             <div className="relative ">
               <ShoppingBag className="mx-2  " color="white" fill="black" />
 
-              <Badge className="absolute bottom-2 right-0">0</Badge>
+              <Badge className="absolute bottom-2 right-0">
+                {totalQuantity}
+              </Badge>
             </div>
           </div>
         </li>

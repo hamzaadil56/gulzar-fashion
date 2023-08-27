@@ -1,12 +1,15 @@
 "use client";
 import React from "react";
-import ProducPic from "@/assets/images/promo1.jpg";
-import Image from "next/image";
+
 import { textFont } from "../../../utils/fonts";
 import { X } from "lucide-react";
 import CartItem from "../shared/CartIem";
+import { useCartStore } from "@/state/cartState";
+import StripeCheckOutButton from "./Checkout";
 
 const Cart = ({ cartClose }: { cartClose(): void }) => {
+  const { cartItems, totalPrice, totalQuantity } = useCartStore();
+
   return (
     <>
       <div
@@ -18,12 +21,18 @@ const Cart = ({ cartClose }: { cartClose(): void }) => {
             <X color="black" size={20} />
           </button>
         </div>
-        <CartItem />
+        {cartItems.map((cartItem) => (
+          <CartItem cartItem={cartItem} />
+        ))}
 
         <div className={textFont.className}>
           <div className="flex justify-between my-4  font-bold">
+            <h1>Total Items:</h1>
+            <h1>{totalQuantity}</h1>
+          </div>
+          <div className="flex justify-between my-4  font-bold">
             <h1>Total:</h1>
-            <h1>1200Rs</h1>
+            <h1>{totalPrice}</h1>
           </div>
           <div className="flex justify-between my-4 font-bold text-gray-400">
             <h1>Shipping</h1>
@@ -32,9 +41,7 @@ const Cart = ({ cartClose }: { cartClose(): void }) => {
         </div>
 
         <button className="w-full py-4">View Bag</button>
-        <button className="bg-black text-white w-full py-4">
-          Go To Checkout
-        </button>
+        <StripeCheckOutButton />
       </div>
 
       <div

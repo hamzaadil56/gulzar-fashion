@@ -3,8 +3,7 @@ import "../styles/globals.css";
 import { Ovo } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/layout/Header";
-import { store } from "@/redux/store";
-import CartProvider from "@/components/layout/CartProvider";
+import Footer from "@/components/layout/Footer";
 
 const inter = Ovo({ subsets: ["latin"], weight: "400" });
 
@@ -22,10 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ClerkProvider>
-          <CartProvider>
-            <Header />
-            {children}
-          </CartProvider>
+          <Header />
+          {children}
+          <Footer />
         </ClerkProvider>
       </body>
     </html>

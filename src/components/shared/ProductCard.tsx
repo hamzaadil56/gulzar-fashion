@@ -1,6 +1,5 @@
 import React from "react";
-import Promo2 from "@/assets/images/promo2.jpg";
-import styles from "./ProductCard.module.css";
+
 import NextImage from "next/image";
 import { textFont } from "../../../utils/fonts";
 import type { Image } from "sanity";
