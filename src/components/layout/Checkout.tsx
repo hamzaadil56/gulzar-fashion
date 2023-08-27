@@ -5,7 +5,8 @@ import Button from "../shared/Button";
 
 const StripeCheckOutButton = () => {
   const { cartItems } = useCartStore();
-
+  const url = window.location.origin;
+  console.log(url);
   const handleCheckout = async () => {
     if (!cartItems.length) {
       console.log("Add items to cart!");
@@ -13,9 +14,10 @@ const StripeCheckOutButton = () => {
     }
     try {
       const stripe = await getStripePromise();
+      console.log(stripe, "stripe");
       const response = await fetch("/api/stripe-session/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Origin: `${url}` },
         cache: "no-cache",
         body: JSON.stringify(cartItems),
       });
@@ -27,7 +29,7 @@ const StripeCheckOutButton = () => {
       }
 
       if (data.session) {
-        stripe?.redirectToCheckout({ sessionId: data.session.id });
+        await stripe?.redirectToCheckout({ sessionId: data.session.id });
       }
     } catch (error: any) {
       console.log(error.message);

@@ -18,7 +18,6 @@ export default async function Home() {
       <Promotions />
       <Featured />
       <NewsLetter />
-      <Footer />
     </main>
   );
 }

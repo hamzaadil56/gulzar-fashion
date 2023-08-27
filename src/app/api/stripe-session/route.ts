@@ -17,10 +17,7 @@ export async function POST(request: NextRequest) {
         mode: "payment",
         payment_method_types: ["card"],
         billing_address_collection: "auto",
-        shipping_options: [
-          { shipping_rate: "shr_1NJgGfFFOcRRviB5IKHisAI1" },
-          { shipping_rate: "shr_1NJgFzFFOcRRviB5RNlrrnhM" },
-        ],
+
         invoice_creation: {
           enabled: true,
         },
@@ -52,6 +49,7 @@ export async function POST(request: NextRequest) {
       throw new Error("No data found");
     }
   } catch (err: any) {
-    console.log(err);
+    console.log(err.message);
+    return NextResponse.json({ message: err.message });
   }
 }
