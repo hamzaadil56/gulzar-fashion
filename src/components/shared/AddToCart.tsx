@@ -9,8 +9,6 @@ import Button from "./Button";
 const AddToCart = ({ product }: { product: Product }) => {
   const [productQuantity, setProductQuantity] = useState(1);
   const { cartItems, totalQuantity, addToCart } = useCartStore();
-  console.log(totalQuantity);
-  console.log(cartItems);
 
   const increment = () => {
     return setProductQuantity((quantity) => quantity + 1);

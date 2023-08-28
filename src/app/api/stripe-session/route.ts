@@ -9,7 +9,6 @@ const stripe = new Stripe(key, {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  console.log(body, "body of stripe-session");
   try {
     if (body.length > 0) {
       const session = await stripe.checkout.sessions.create({
@@ -49,7 +48,6 @@ export async function POST(request: NextRequest) {
       throw new Error("No data found");
     }
   } catch (err: any) {
-    console.log(err.message);
     return NextResponse.json({ message: err.message });
   }
 }

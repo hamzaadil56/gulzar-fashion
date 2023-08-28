@@ -42,9 +42,8 @@ const Shop = async () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-10 gap-y-20">
         {products.map((product: Product, index: number) => {
           const refactoredTitle = product.title.replaceAll(" ", "-");
-          console.log(refactoredTitle);
           return (
-            <Link href={`/shop/${refactoredTitle}`}>
+            <Link key={index} href={`/shop/${refactoredTitle}`}>
               <ProductCard
                 key={index}
                 title={product.title}

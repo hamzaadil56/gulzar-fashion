@@ -28,7 +28,6 @@ function Header() {
 
   function cartClose() {
     setCartOpen(false);
-    console.log(isCartOpen);
   }
   // useEffect(() => {
   //   const linksHeight = linksRef.current?.getBoundingClientRect().height;

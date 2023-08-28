@@ -6,15 +6,12 @@ import Button from "../shared/Button";
 const StripeCheckOutButton = () => {
   const { cartItems } = useCartStore();
   const url = window.location.origin;
-  console.log(url);
   const handleCheckout = async () => {
     if (!cartItems.length) {
-      console.log("Add items to cart!");
       return;
     }
     try {
       const stripe = await getStripePromise();
-      console.log(stripe, "stripe");
       const response = await fetch("/api/stripe-session/", {
         method: "POST",
         headers: { "Content-Type": "application/json", Origin: `${url}` },
