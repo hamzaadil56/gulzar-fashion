@@ -8,10 +8,10 @@ import { useCartStore } from "@/state/cartState";
 import { CartItem } from "../../../utils/types";
 import ChangeQuantity from "./changeQuantity";
 
-const CartItem = ({ cartItem }: { cartItem: CartItem }) => {
+const CartItem = ({ cartItem, key }: { cartItem: CartItem; key: number }) => {
   const { addProductQuantity, subProductQuantity } = useCartStore();
   return (
-    <div className="flex border-b-[1px] w-full border-grey-700 py-4 ">
+    <div key={key} className="flex border-b-[1px] w-full border-grey-700 py-4 ">
       <Image alt="product" width={66} height={84} src={ProducPic} />
       <div
         className={`${textFont.className} flex flex-grow flex-col justify-between ml-4`}

@@ -21,8 +21,8 @@ const Cart = ({ cartClose }: { cartClose(): void }) => {
             <X color="black" size={20} />
           </button>
         </div>
-        {cartItems.map((cartItem) => (
-          <CartItem cartItem={cartItem} />
+        {cartItems.map((cartItem, index) => (
+          <CartItem key={index} cartItem={cartItem} />
         ))}
 
         <div className={textFont.className}>
