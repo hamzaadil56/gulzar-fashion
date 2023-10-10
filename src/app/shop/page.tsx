@@ -18,6 +18,7 @@ const Shop = async () => {
   };
 
   const products = await getProducts();
+  console.log(products);
 
   return (
     <div className="max-w-7xl px-5 md:px-10 py-2 mx-auto">
